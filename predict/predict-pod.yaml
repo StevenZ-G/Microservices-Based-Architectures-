@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: predict-pod
+spec:
+  containers:
+    - name: predict
+      image: stevenzamg/predict-service
+      ports:
+        - containerPort: 5003
+      volumeMounts:
+        - mountPath: "/mnt/data"
+          name: ml-volume
+  volumes:
+    - name: ml-volume
+      persistentVolumeClaim:
+        claimName: ml-persistent-volume-claim

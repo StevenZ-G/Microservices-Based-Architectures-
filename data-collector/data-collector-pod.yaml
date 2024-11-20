@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: data-collector-pod
+spec:
+  containers:
+    - name: data-collector
+      image: stevenzamg/data-collector-service
+      ports:
+        - containerPort: 5000
+      volumeMounts:
+        - mountPath: "/mnt/data"  # Ruta dentro del contenedor
+          name: ml-volume
+  volumes:
+    - name: ml-volume
+      persistentVolumeClaim:
+        claimName: ml-persistent-volume-claim

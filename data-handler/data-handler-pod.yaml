@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: data-handler-pod
+spec:
+  containers:
+    - name: data-handler
+      image: stevenzamg/data-handler-service
+      ports:
+        - containerPort: 5001
+      volumeMounts:
+        - mountPath: "/mnt/data"
+          name: ml-volume
+  volumes:
+    - name: ml-volume
+      persistentVolumeClaim:
+        claimName: ml-persistent-volume-claim
