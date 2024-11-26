@@ -11,18 +11,18 @@ app = Flask(__name__)
 
 
 # Direcciones de los otros microservicios
-# DATA_COLLECTOR_URL = "http://data-collector-service:5000/collect"
-# DATA_HANDLER_URL = "http://data-handler-service:5001/preprocess"
-# FEATURE_EXTRACTION_URL = "http://feature-extraction-service:5002/extract"
-# PREDICT_SERVICE_URL = "http://predict-service:5003/predict"
+DATA_COLLECTOR_URL = "http://data-collector-service:5000/collect"
+DATA_HANDLER_URL = "http://data-handler-service:5001/preprocess"
+FEATURE_EXTRACTION_URL = "http://feature-extraction-service:5002/extract"
+PREDICT_SERVICE_URL = "http://predict-service:5003/predict"
 
-import os
+# import os
 
-DATA_COLLECTOR_URL = os.getenv("DATA_COLLECTOR_URL")
-DATA_HANDLER_URL = os.getenv("DATA_HANDLER_URL")
-FEATURE_EXTRACTION_URL = os.getenv("FEATURE_EXTRACTION_URL")
-PREDICT_SERVICE_URL = os.getenv("PREDICT_SERVICE_URL")
-MODEL_FILE = os.getenv("MODEL_FILE")
+# DATA_COLLECTOR_URL = os.getenv("DATA_COLLECTOR_URL")
+# DATA_HANDLER_URL = os.getenv("DATA_HANDLER_URL")
+# FEATURE_EXTRACTION_URL = os.getenv("FEATURE_EXTRACTION_URL")
+# PREDICT_SERVICE_URL = os.getenv("PREDICT_SERVICE_URL")
+# MODEL_FILE = os.getenv("MODEL_FILE")
 
 
 # Servicio de orquestación para coordinar los microservicios

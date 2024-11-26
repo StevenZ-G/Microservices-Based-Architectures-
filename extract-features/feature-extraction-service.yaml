@@ -8,5 +8,5 @@ spec:
   ports:
     - protocol: TCP
       port: 5002
-      targetPort: 5002  
-  type: ClusterIP       
+      targetPort: 5002
+  type: ClusterIP

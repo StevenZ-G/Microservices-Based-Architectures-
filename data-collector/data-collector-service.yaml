@@ -4,9 +4,9 @@ metadata:
   name: data-collector-service
 spec:
   selector:
-    app: data-collector  
+    app: data-collector
   ports:
     - protocol: TCP
-      port: 5000        
-      targetPort: 5000  
-  type: ClusterIP       
+      port: 5000
+      targetPort: 5000
+  type: ClusterIP

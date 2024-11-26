@@ -4,8 +4,8 @@ metadata:
   name: ml-persistent-volume
 spec:
   capacity:
-    storage: 5Gi  # Define el tamaño según tus necesidades
+    storage: 5Gi  # Tamaño del volumen
   accessModes:
-    - ReadWriteMany  # Permite a múltiples Pods leer y escribir
+    - ReadWriteMany  # Permite que varios Pods lean y escriban
   hostPath:
-    path: /mnt/data  # Ubicación en el sistema de archivos del nodo (solo en desarrollo)
+    path: /mnt/data  # Ruta en el nodo (para desarrollo)
