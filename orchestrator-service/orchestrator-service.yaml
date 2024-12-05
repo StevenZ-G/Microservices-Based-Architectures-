@@ -5,8 +5,9 @@ metadata:
 spec:
   selector:
     app: orchestrator
+  type: NodePort
   ports:
     - protocol: TCP
       port: 5004
       targetPort: 5004
-  type: ClusterIP
+      nodePort: 30004
