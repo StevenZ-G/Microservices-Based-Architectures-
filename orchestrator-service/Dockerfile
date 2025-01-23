@@ -1,20 +1,18 @@
-# Utilizar la imagen base de Python
+# Usa la imagen base de Python
 FROM python:3.8-slim
 
-# Establecer el directorio de trabajo dentro del contenedor
+# Establecer el directorio de trabajo
 WORKDIR /app
 
-# Copiar solo el archivo requirements.txt para aprovechar el cache
-COPY requirements.txt /app/
+# Copiar el código fuente y las dependencias al contenedor
+COPY app.py /app/app.py
+COPY requirements.txt /app/requirements.txt
 
-# Actualizar pip e instalar las dependencias
-RUN pip install --upgrade pip && pip install -r requirements.txt
+# Instalar las dependencias
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Copiar el contenido del directorio local al contenedor
-COPY . /app
-
-# Exponer el puerto 5004 para Flask
+# Exponer el puerto 5004 para el orquestador
 EXPOSE 5004
 
-# Comando para iniciar la aplicación Flask
+# Comando para ejecutar la aplicación
 CMD ["python", "app.py"]

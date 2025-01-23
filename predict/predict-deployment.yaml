@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: predict
-          image: stevenzamg/predict-service
+          image: stevenzamg/predict-service2
           ports:
             - containerPort: 5003
           volumeMounts:
