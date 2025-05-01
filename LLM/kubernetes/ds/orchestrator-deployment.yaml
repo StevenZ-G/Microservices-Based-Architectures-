@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: llmorchestrator-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: llmorchestrator
+  template:
+    metadata:
+      labels:
+        app: llmorchestrator
+    spec:
+      containers:
+        - name: llmorchestrator
+          image: stevenzamg/llmorchestrator
+          ports:
+            - containerPort: 5016
+          volumeMounts:
+            - mountPath: "/llm/data"
+              name: llm-volume
+      volumes:
+        - name: llm-volume
+          persistentVolumeClaim:
+            claimName: llm-persistent-volume-claim

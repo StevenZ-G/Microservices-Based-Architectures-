@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: songs-service
+spec:
+  selector:
+    app: songs
+  ports:
+    - protocol: TCP
+      port: 5012
+      targetPort: 5012
+  type: ClusterIP

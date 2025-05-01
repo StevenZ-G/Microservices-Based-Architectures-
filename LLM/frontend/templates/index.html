@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>🎧 Recomendador Linkin Park</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>🎧 Recomendador de Canciones de Linkin Park</h1>
+        <p class="subtitle">Describe cómo te sientes y déjate llevar por la música</p>
+
+        <form method="post" class="form">
+            <input type="text" name="user_id" placeholder="Tu ID de usuario" required>
+            <textarea name="emotion" placeholder="¿Cómo te sientes hoy?" rows="3" required></textarea>
+            <button type="submit">🔍 Recomiéndame una canción</button>
+        </form>
+
+        {% if submitted %}
+        <div class="result">
+            <h2>🎵 Canción recomendada:</h2>
+            <p><strong>{{ recommendation.songname }}</strong></p>
+        </div>
+        {% endif %}
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="errors">
+            {% for message in messages %}
+            <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+    </div>
+</body>
+</html>

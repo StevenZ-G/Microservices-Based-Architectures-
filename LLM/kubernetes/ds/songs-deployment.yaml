@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: songs-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: songs
+  template:
+    metadata:
+      labels:
+        app: songs
+    spec:
+      containers:
+        - name: songs
+          image: stevenzamg/songs-service
+          ports:
+            - containerPort: 5012
+          volumeMounts:
+            - mountPath: "/llm/data"
+              name: llm-volume
+      volumes:
+        - name: llm-volume
+          persistentVolumeClaim:
+            claimName: llm-persistent-volume-claim

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba de Arquitectura</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Sube una imagen para obtener una predicción</h2>
+
+        <form action="/" method="POST" enctype="multipart/form-data" id="uploadForm">
+            <input type="file" name="image" accept="image/*" required onchange="previewImage(event)">
+            <br>
+            <img id="imagePreview" 
+                src="{{ image_url if image_url else '#' }}" 
+                alt="Vista previa" 
+                style="display: {{ 'block' if image_url else 'none' }}; max-width: 100%; margin-top: 10px;">
+            <br>
+            <button type="submit">Enviar</button>
+        </form>
+
+        {% if prediction %}
+            <h3>Predicción: {{ prediction }}</h3>
+        {% endif %}
+
+        {% if error %}
+            <p class="error">Error: {{ error }}</p>
+        {% endif %}
+    </div>
+
+    <script>
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                localStorage.setItem('imageData', reader.result); // Guardar imagen en localStorage
+                const output = document.getElementById('imagePreview');
+                output.src = reader.result;
+                output.style.display = 'block';
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+
+        // Mantener la imagen después de la predicción
+        window.onload = function() {
+            const savedImage = localStorage.getItem('imageData');
+            if (savedImage) {
+                const output = document.getElementById('imagePreview');
+                output.src = savedImage;
+                output.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-interface-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-interface
+  template:
+    metadata:
+      labels:
+        app: user-interface
+    spec:
+      containers:
+        - name: user-interface
+          image: stevenzamg/user-interface
+          ports:
+            - containerPort: 5010
+          volumeMounts:
+            - mountPath: "/llm/data"
+              name: llm-data 
+      volumes:
+        - name: llm-data
+          persistentVolumeClaim:
+            claimName: llm-persistent-volume-claim

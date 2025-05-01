@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: emotions-service
+spec:
+  selector:
+    app: emotions
+  ports:
+    - protocol: TCP
+      port: 5011
+      targetPort: 5011
+  type: ClusterIP

@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: emotions-songs-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: emotions-songs
+  template:
+    metadata:
+      labels:
+        app: emotions-songs
+    spec:
+      containers:
+        - name: emotions-songs
+          image: stevenzamg/emotions-songs-service
+          ports:
+            - containerPort: 5013
+          volumeMounts:
+            - mountPath: "/llm/data"
+              name: llm-volume
+      volumes:
+        - name: llm-volume
+          persistentVolumeClaim:
+            claimName: llm-persistent-volume-claim

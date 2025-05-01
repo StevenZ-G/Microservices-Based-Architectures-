@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: predict-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: predict
+  template:
+    metadata:
+      labels:
+        app: predict
+    spec:
+      containers:
+        - name: predict
+          image: stevenzamg/predict-service2
+          ports:
+            - containerPort: 5003
+          volumeMounts:
+            - mountPath: "/mnt/data"
+              name: ml-volume
+      volumes:
+        - name: ml-volume
+          persistentVolumeClaim:
+            claimName: ml-persistent-volume-claim

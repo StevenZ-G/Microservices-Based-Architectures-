@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orchestrator-deployment
+spec:
+  replicas: 3  # Mantener 3 réplicas 
+  selector:
+    matchLabels:
+      app: orchestrator
+  template:
+    metadata:
+      labels:
+        app: orchestrator
+        version: "Blue"  # Etiqueta de versión blue
+    spec:
+      containers:
+        - name: orchestrator
+          image: stevenzamg/orchestrator-service  # Usar la imagen sin tag
+          ports:
+            - containerPort: 5004
+          volumeMounts:
+            - mountPath: "/mnt/data"
+              name: ml-volume
+          resources:
+            requests:
+              cpu: "250m"  # Reserva 250 milicores
+              memory: "512Mi"  # Reserva 512 MB de RAM
+            limits:
+              cpu: "500m"  # Límite máximo de 500 milicores
+              memory: "1Gi"  # Límite máximo de 1 GB de RAM
+          readinessProbe:
+            httpGet:
+              path: /health  # Usa un endpoint de salud
+              port: 5004
+            initialDelaySeconds: 5  # Espera 5s antes de chequear
+            periodSeconds: 3  # Revisa cada 3s
+          livenessProbe:
+            httpGet:
+              path: /health  # Verifica si está vivo
+              port: 5004
+            initialDelaySeconds: 10  # Espera 10s antes de la primera verificación
+            periodSeconds: 5  # Revisa cada 5s
+      volumes:
+        - name: ml-volume
+          persistentVolumeClaim:
+            claimName: ml-persistent-volume-claim

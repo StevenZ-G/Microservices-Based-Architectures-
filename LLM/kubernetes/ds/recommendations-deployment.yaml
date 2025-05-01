@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recommendations-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: recommendations
+  template:
+    metadata:
+      labels:
+        app: recommendations
+    spec:
+      containers:
+        - name: recommendations
+          image: stevenzamg/recommendations-service
+          ports:
+            - containerPort: 5014
+          volumeMounts:
+            - mountPath: "/llm/data"
+              name: llm-volume
+      volumes:
+        - name: llm-volume
+          persistentVolumeClaim:
+            claimName: llm-persistent-volume-claim
