@@ -5,10 +5,10 @@ metadata:
 spec:
   replicas: 3  # Mantener 3 réplicas
   strategy:
-    type: Recreate  # Permite actualizaciones sin downtime
-    #rollingUpdate:
-      #maxSurge: 1  
-      #maxUnavailable: 1  
+    type: RollingUpdate  # Estrategia de actualización
+    rollingUpdate:  # Permite actualizaciones sin downtime
+      maxSurge: 1  
+      maxUnavailable: 1   
   selector:
     matchLabels:
       app: orchestrator
@@ -16,7 +16,7 @@ spec:
     metadata:
       labels:
         app: orchestrator
-        version: "2"  # Etiqueta de versión 2
+        #version: "2"  # Etiqueta de versión 2
     spec:
       containers:
         - name: orchestrator
