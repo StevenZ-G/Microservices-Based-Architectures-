@@ -1,32 +1,18 @@
 from flask import Flask, request, jsonify
-import requests
-import os
-import openai
 import numpy as np
-
-# Configurar la API Key de OpenAI
-openai.api_key = "sk-proj-CkPMCwKCI532qRmbD7k0T3BlbkFJZzepifI760gMZo5GpDto"
-
+import requests
 
 app = Flask(__name__)
 
-@app.route("/emotionsSongs", methods=["POST"])  # Cambia a POST
+OLLAMA_URL = "http://ollama-service:11434/api/embeddings"
+OLLAMA_MODEL = "nomic-embed-text"
+
+@app.route("/emotionsSongs", methods=["POST"])
 def emotionsSongs():
-    songs = request.json  # Se espera una lista de diccionarios
+    songs = request.json
 
     if not songs or not isinstance(songs, list):
         return jsonify({"error": "Formato incorrecto, se espera una lista de canciones"}), 400
-
-    def obtener_embedding(texto):
-        try:
-            respuesta = openai.embeddings.create(
-                model="text-embedding-ada-002", 
-                input=texto
-            )
-            embedding = np.array(respuesta.data[0].embedding)
-            return embedding, None
-        except Exception as e:
-            return None, f"Error al obtener el embedding: {str(e)}"
 
     results = []
     for song in songs:
@@ -37,12 +23,25 @@ def emotionsSongs():
             return jsonify({"error": "Cada entrada debe tener 'songname' y 'emotions'"}), 400
 
         embedding, error = obtener_embedding(emotion)
-        if error:
+        if embedding is None:
             return jsonify({"error": error}), 500
 
         results.append({"songname": songname, "emotions_embedding": embedding.tolist()})
 
     return jsonify(results)
+
+def obtener_embedding(texto):
+    try:
+        response = requests.post(
+            OLLAMA_URL,
+            json={"model": OLLAMA_MODEL, "prompt": texto},
+            headers={"Content-Type": "application/json"}
+        )
+        response.raise_for_status()
+        embedding = np.array(response.json()["embedding"])
+        return embedding, None
+    except Exception as e:
+        return None, f"Error al obtener el embedding desde Ollama: {str(e)}"
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5013)

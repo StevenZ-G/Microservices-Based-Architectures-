@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prueba de Arquitectura</title>
+    <title>Architecture Test</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="container">
-        <h2>Sube una imagen para obtener una predicción</h2>
+        <h2>Upload an image to get a prediction</h2>
 
         <form action="/" method="POST" enctype="multipart/form-data" id="uploadForm">
             <input type="file" name="image" accept="image/*" required onchange="previewImage(event)">
@@ -18,11 +18,11 @@
                 alt="Vista previa" 
                 style="display: {{ 'block' if image_url else 'none' }}; max-width: 100%; margin-top: 10px;">
             <br>
-            <button type="submit">Enviar</button>
+            <button type="submit">Send</button>
         </form>
 
         {% if prediction %}
-            <h3>Predicción: {{ prediction }}</h3>
+            <h3>Prediction: {{ prediction }}</h3>
         {% endif %}
 
         {% if error %}

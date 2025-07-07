@@ -15,10 +15,10 @@ CLASS_LABELS = {
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    image_url = None  # Variable para almacenar la imagen en base64
+    image_url = None  # Variable para almacenar la imagen en base64 ------ Deberia apuntar al Data-Collector
     if request.method == "POST":
         if "image" not in request.files:
-            return render_template("index.html", error="No se seleccionó ninguna imagen.")
+            return render_template("index.html", error="No image selected.")
 
         image_file = request.files["image"]
 
@@ -34,13 +34,13 @@ def index():
 
             if response.status_code == 200:
                 class_id = response_data.get("prediction", {}).get("class")
-                predicted_label = CLASS_LABELS.get(class_id, "Clase desconocida")
+                predicted_label = CLASS_LABELS.get(class_id, "Unknown Class")
                 return render_template("index.html", prediction=predicted_label, image_url=image_url)
             else:
-                return render_template("index.html", error=response_data.get("error", "Error desconocido."), image_url=image_url)
+                return render_template("index.html", error=response_data.get("error", "Unknown Error."), image_url=image_url)
 
         except requests.exceptions.RequestException as e:
-            return render_template("index.html", error=f"Error al conectar con el orquestador: {str(e)}", image_url=image_url)
+            return render_template("index.html", error=f"Error connecting to the orchestrator: {str(e)}", image_url=image_url)
 
     return render_template("index.html", image_url=image_url)
 

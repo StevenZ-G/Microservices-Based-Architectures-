@@ -8,18 +8,18 @@
 </head>
 <body>
     <div class="container">
-        <h1>🎧 Recomendador de Canciones de Linkin Park</h1>
-        <p class="subtitle">Describe cómo te sientes y déjate llevar por la música</p>
+        <h1>🎧 Linkin Park Song Recommender</h1>
+        <p class="subtitle">Describe how you feel and let yourself be carried away by the music</p>
 
         <form method="post" class="form">
             <input type="text" name="user_id" placeholder="Tu ID de usuario" required>
             <textarea name="emotion" placeholder="¿Cómo te sientes hoy?" rows="3" required></textarea>
-            <button type="submit">🔍 Recomiéndame una canción</button>
+            <button type="submit">🔍 Recommend me a song</button>
         </form>
 
         {% if submitted %}
         <div class="result">
-            <h2>🎵 Canción recomendada:</h2>
+            <h2>🎵 Recommended song:</h2>
             <p><strong>{{ recommendation.songname }}</strong></p>
         </div>
         {% endif %}

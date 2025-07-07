@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: emotions-songs
-          image: stevenzamg/emotions-songs-service
+          image: stevenzamg/emotions-songs-service:ollama
           ports:
             - containerPort: 5013
           volumeMounts:

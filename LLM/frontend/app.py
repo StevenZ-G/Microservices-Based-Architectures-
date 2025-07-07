@@ -14,7 +14,7 @@ def index():
         emotion = request.form['emotion']
 
         if not user_id or not emotion:
-            flash("Por favor, completa todos los campos.")
+            flash("Please complete all fields.")
             return redirect(url_for('index'))
 
         try:
@@ -26,9 +26,9 @@ def index():
                 data = response.json()
                 return render_template('index.html', recommendation=data['recommendation'], submitted=True)
             else:
-                flash(f"Error del orquestador: {response.json().get('error')}")
+                flash(f"Orchestrator Error: {response.json().get('error')}")
         except Exception as e:
-            flash(f"Error de conexión: {str(e)}")
+            flash(f"Conection Error: {str(e)}")
 
     return render_template('index.html', submitted=False)
 
